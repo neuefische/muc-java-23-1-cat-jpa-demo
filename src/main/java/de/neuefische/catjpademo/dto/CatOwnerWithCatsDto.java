@@ -2,8 +2,9 @@ package de.neuefische.catjpademo.dto;
 
 import java.util.List;
 
-public record CatOwnerPostRequest(
+public record CatOwnerWithCatsDto(
+        Long id,
         String name,
-        List<CatPostRequest> cats
+        List<CatWithoutOwnerDto> cats
 ) {
 }

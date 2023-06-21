@@ -1,7 +1,7 @@
 package de.neuefische.catjpademo.controller;
 
-import de.neuefische.catjpademo.dto.CatOwnerGetRequest;
-import de.neuefische.catjpademo.dto.CatOwnerPostRequest;
+import de.neuefische.catjpademo.dto.CatOwnerWithCatsDto;
+import de.neuefische.catjpademo.dto.CatOwnerWithoutCatsDto;
 import de.neuefische.catjpademo.service.CatOwnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,26 +10,53 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/owners")
+@RequestMapping("/api/cat-owners")
 @RequiredArgsConstructor
 public class CatOwnerController {
 
     private final CatOwnerService catOwnerService;
 
     @GetMapping
-    public List<CatOwnerGetRequest> getAllCatOwners() {
-        return catOwnerService.getAllCatOwners();
+    public List<CatOwnerWithoutCatsDto> getAllCatOwnersWithoutCats() {
+        return catOwnerService.getAllCatOwnersWithoutCats();
     }
 
-    @GetMapping("/{id}")
-    public CatOwnerGetRequest getCatOwnerById(@PathVariable Long id) {
-        return catOwnerService.getCatOwnerById(id);
+    @GetMapping("/with-cats/{id}")
+    public CatOwnerWithCatsDto getCatOwnerWithoutCatsById(@PathVariable Long id) {
+        return catOwnerService.getCatOwnerWithCatsById(id);
     }
 
-    @PostMapping
+    @GetMapping("/without-cats/{id}")
+    public CatOwnerWithoutCatsDto getCatOwnerWithCatsById(@PathVariable Long id) {
+        return catOwnerService.getCatsOwnerWithoutCatsById(id);
+    }
+
+    @PostMapping("/without-cats/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public CatOwnerGetRequest addCatOwner(@RequestBody CatOwnerPostRequest catOwnerPostRequest) {
-        return catOwnerService.addCatOwner(catOwnerPostRequest);
+    public CatOwnerWithoutCatsDto addCatOwnerWithoutCats(@RequestBody CatOwnerWithoutCatsDto catOwner) {
+        return catOwnerService.addCatOwnerWithoutCats(catOwner);
+    }
+
+    @PostMapping("/with-cats/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CatOwnerWithCatsDto addCatOwnerWithCats(@RequestBody CatOwnerWithCatsDto catOwner) {
+        return catOwnerService.addCatOwnerWithCats(catOwner);
+    }
+
+    @PutMapping("/with-cats/{id}")
+    public CatOwnerWithCatsDto updateCatOwnerWithCats(@PathVariable Long id, @RequestBody CatOwnerWithCatsDto catOwner) {
+        return catOwnerService.updateCatOwnerWithCats(id, catOwner);
+    }
+
+    @PutMapping("/without-cats/{id}")
+    public CatOwnerWithoutCatsDto updateCatOwnerWithoutCats(@PathVariable Long id, @RequestBody CatOwnerWithoutCatsDto catOwner) {
+        return catOwnerService.updateCatOwnerWithoutCats(id, catOwner);
+    }
+
+    @DeleteMapping("/with-cats/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCatOwnerWithCats(@PathVariable Long id) {
+        catOwnerService.deleteCatOwnerById(id);
     }
 
 }
