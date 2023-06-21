@@ -8,6 +8,7 @@ import de.neuefische.catjpademo.entity.CatOwner;
 import de.neuefische.catjpademo.repository.CatOwnerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +31,13 @@ public class CatOwnerService {
                 .toList();
     }
 
+    @Transactional
     public CatOwnerWithCatsDto getCatOwnerWithCatsById(Long id) {
-        return catOwnerRepository
+        CatOwner catOwner = catOwnerRepository
                 .findById(id)
-                .map(catOwner -> new CatOwnerWithCatsDto(
-                                catOwner.getCatOwnerId(),
-                                catOwner.getName(),
-                                catOwner.getCats().stream().map(cat -> new CatWithoutOwnerDto(
-                                        cat.getCatId(),
-                                        cat.getName()
-                                )).toList()
-                        )
-                )
-                .orElseThrow(() -> new RuntimeException("CatOwner with id " + id + " not found"));
+                .orElseThrow(() -> new NoSuchElementException("CatOwner with id " + id + " not found"));
+        List<CatWithoutOwnerDto> cats = catOwner.getCats().stream().map(cat -> new CatWithoutOwnerDto(cat.getCatId(), cat.getName())).toList();
+        return new CatOwnerWithCatsDto(catOwner.getCatOwnerId(), catOwner.getName(), cats);
     }
 
     public CatOwnerWithoutCatsDto getCatsOwnerWithoutCatsById(Long id) {
