@@ -31,7 +31,7 @@ public class CatService {
                 .toList();
     }
 
-    public CatWithOwnerDto getCatWithOwnerById(Long id) {
+    public CatWithOwnerDto getCatWithOwnerById(String id) {
         Cat cat = catRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Cat with id " + id + " not found"));
         if(cat.getOwner() == null) {
             return new CatWithOwnerDto(cat.getCatId(), cat.getName(), null);
@@ -40,7 +40,7 @@ public class CatService {
         return new CatWithOwnerDto(cat.getCatId(), cat.getName(), new CatOwnerWithoutCatsDto(owner.getCatOwnerId(), owner.getName()));
     }
 
-    public CatWithoutOwnerDto getCatWithoutOwnerById(Long id) {
+    public CatWithoutOwnerDto getCatWithoutOwnerById(String id) {
         Cat cat = catRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Cat with id " + id + " not found"));
         return new CatWithoutOwnerDto(cat.getCatId(), cat.getName());
     }
@@ -73,8 +73,7 @@ public class CatService {
         );
     }
 
-    public CatWithOwnerDto updateCatWithOwner(Long id, CatWithOwnerDto cat) {
-        Cat catToUpdate = catRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Cat with id " + id + " not found"));
+    public CatWithOwnerDto updateCatWithOwner(String id, CatWithOwnerDto cat) {
         CatOwner ownerToUpdate = catOwnerRepository.findById(cat.owner().id()).orElseThrow(() -> new NoSuchElementException("Owner with id " + cat.owner().id() + " not found"));
 
         Cat savedCat = catRepository.save(
@@ -95,7 +94,7 @@ public class CatService {
         );
     }
 
-    public CatWithoutOwnerDto updateCatWithoutOwner(Long id, CatWithoutOwnerDto cat) {
+    public CatWithoutOwnerDto updateCatWithoutOwner(String id, CatWithoutOwnerDto cat) {
         Cat catToUpdate = catRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Cat with id " + id + " not found"));
 
         catToUpdate.setName(cat.name());
@@ -108,7 +107,7 @@ public class CatService {
         );
     }
 
-    public void deleteCatById(Long id) {
+    public void deleteCatById(String id) {
         catRepository.deleteById(id);
     }
 

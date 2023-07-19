@@ -32,7 +32,7 @@ public class CatOwnerService {
     }
 
     @Transactional
-    public CatOwnerWithCatsDto getCatOwnerWithCatsById(Long id) {
+    public CatOwnerWithCatsDto getCatOwnerWithCatsById(String id) {
         CatOwner catOwner = catOwnerRepository
                 .findById(id)
                 .orElseThrow(() -> new NoSuchElementException("CatOwner with id " + id + " not found"));
@@ -40,7 +40,7 @@ public class CatOwnerService {
         return new CatOwnerWithCatsDto(catOwner.getCatOwnerId(), catOwner.getName(), cats);
     }
 
-    public CatOwnerWithoutCatsDto getCatsOwnerWithoutCatsById(Long id) {
+    public CatOwnerWithoutCatsDto getCatsOwnerWithoutCatsById(String id) {
         return catOwnerRepository
                 .findById(id)
                 .map(catOwner -> new CatOwnerWithoutCatsDto(
@@ -74,7 +74,7 @@ public class CatOwnerService {
         );
     }
 
-    public CatOwnerWithCatsDto updateCatOwnerWithCats(Long id, CatOwnerWithCatsDto catOwner) {
+    public CatOwnerWithCatsDto updateCatOwnerWithCats(String id, CatOwnerWithCatsDto catOwner) {
         CatOwner catOwnerToUpdate = catOwnerRepository
                 .findById(id)
                 .orElseThrow(() -> new NoSuchElementException("CatOwner with id " + id + " not found"));
@@ -94,7 +94,7 @@ public class CatOwnerService {
         );
     }
 
-    public CatOwnerWithoutCatsDto updateCatOwnerWithoutCats(Long id, CatOwnerWithoutCatsDto catOwner) {
+    public CatOwnerWithoutCatsDto updateCatOwnerWithoutCats(String id, CatOwnerWithoutCatsDto catOwner) {
         CatOwner catOwnerToUpdate = catOwnerRepository
                 .findById(id)
                 .orElseThrow(() -> new NoSuchElementException("CatOwner with id " + id + " not found"));
@@ -109,7 +109,7 @@ public class CatOwnerService {
         );
     }
 
-    public void deleteCatOwnerById(Long id) {
+    public void deleteCatOwnerById(String id) {
         catOwnerRepository.deleteById(id);
     }
 

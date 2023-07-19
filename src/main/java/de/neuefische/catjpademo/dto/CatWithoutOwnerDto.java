@@ -1,7 +1,7 @@
 package de.neuefische.catjpademo.dto;
 
 public record CatWithoutOwnerDto(
-        Long id,
+        String id,
         String name
 ) {
 }

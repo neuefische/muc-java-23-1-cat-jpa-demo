@@ -1,25 +1,26 @@
 package de.neuefische.catjpademo.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.List;
 
-@Entity
+@Document(collection = "catOwners")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class CatOwner {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long catOwnerId;
+    @MongoId
+    private String catOwnerId;
     private String name;
-    @OneToMany(mappedBy = "owner")
+    @DBRef(db = "cats")
     private List<Cat> cats;
 
 }

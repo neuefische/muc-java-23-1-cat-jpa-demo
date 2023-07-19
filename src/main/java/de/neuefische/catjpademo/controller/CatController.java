@@ -22,12 +22,12 @@ public class CatController {
     }
 
     @GetMapping("/without-owner/{id}")
-    public CatWithoutOwnerDto getCatById(@PathVariable Long id) {
+    public CatWithoutOwnerDto getCatById(@PathVariable String id) {
         return catService.getCatWithoutOwnerById(id);
     }
 
     @GetMapping("/with-owner/{id}")
-    public CatWithOwnerDto getCatWithOwnerById(@PathVariable Long id) {
+    public CatWithOwnerDto getCatWithOwnerById(@PathVariable String id) {
         return catService.getCatWithOwnerById(id);
     }
 
@@ -44,18 +44,18 @@ public class CatController {
     }
 
     @PutMapping("/without-owner/update/{id}")
-    public CatWithoutOwnerDto updateCat(@PathVariable Long id, @RequestBody CatWithoutOwnerDto cat) {
+    public CatWithoutOwnerDto updateCat(@PathVariable String id, @RequestBody CatWithoutOwnerDto cat) {
         return catService.updateCatWithoutOwner(id, cat);
     }
 
     @PutMapping("/with-owner/update/{id}")
-    public CatWithOwnerDto updateCatWithOwner(@PathVariable Long id, @RequestBody CatWithOwnerDto cat) {
+    public CatWithOwnerDto updateCatWithOwner(@PathVariable String id, @RequestBody CatWithOwnerDto cat) {
         return catService.updateCatWithOwner(id, cat);
     }
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCat(@PathVariable Long id) {
+    public void deleteCat(@PathVariable String id) {
         catService.deleteCatById(id);
     }
 
